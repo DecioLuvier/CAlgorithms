@@ -34,9 +34,11 @@ void pushInfo() {
     strcat(WORD_LIST, WORD_INPUT);
 
     printf("Insert an age:\n");
-    scanf(" %1[^\n]", WORD_INPUT); 
-    buffer = realloc(buffer,WORD_LIST_BASE + (sizeof(char) * (strlen(WORD_LIST) + strlen(WORD_INPUT) + 1)));
+    scanf(" %78[^\n]", WORD_INPUT + 1);
+    WORD_INPUT[0] = (char) strlen(WORD_INPUT + 1);
+    buffer = realloc(buffer, WORD_LIST_BASE + (sizeof(char) * (strlen(WORD_LIST) + strlen(WORD_INPUT) + 1)));
     strcat(WORD_LIST, WORD_INPUT);
+
 
     WORD_LIST_LENGTH = WORD_LIST_LENGTH + 1; 
     WORD_INPUT[0] = '\0';
@@ -135,21 +137,25 @@ void printAllInfo() {
 
         printf("Person %hu:\n", LOOP_COUNTER);
         COUNTER_CHAR = (unsigned char) WORD_LIST[WORD_COUNTER_TBN];
-        WORD_COUNTER_TBN = WORD_COUNTER_TBN + 1;
-
+        WORD_COUNTER_TBN += 1;
         printf("Name: %.*s\n", COUNTER_CHAR, WORD_LIST + WORD_COUNTER_TBN);
-        WORD_COUNTER_TBN = WORD_COUNTER_TBN + COUNTER_CHAR;
+        WORD_COUNTER_TBN += COUNTER_CHAR;
+
         COUNTER_CHAR = (unsigned char) WORD_LIST[WORD_COUNTER_TBN];
-        WORD_COUNTER_TBN = WORD_COUNTER_TBN + 1;
-
+        WORD_COUNTER_TBN += 1;
         printf("Email: %.*s\n", COUNTER_CHAR, WORD_LIST + WORD_COUNTER_TBN);
-        WORD_COUNTER_TBN = WORD_COUNTER_TBN + COUNTER_CHAR;
+        WORD_COUNTER_TBN += COUNTER_CHAR;
 
-        printf("Age: %c\n\n", WORD_LIST[WORD_COUNTER_TBN]);
-        WORD_COUNTER_TBN = WORD_COUNTER_TBN + 1;
-        LOOP_COUNTER = LOOP_COUNTER + 1;
+        COUNTER_CHAR = (unsigned char) WORD_LIST[WORD_COUNTER_TBN];
+        WORD_COUNTER_TBN += 1;
+
+        printf("Age: %.*s\n\n", COUNTER_CHAR, WORD_LIST + WORD_COUNTER_TBN);
+        WORD_COUNTER_TBN += COUNTER_CHAR;
+
+        LOOP_COUNTER += 1;
     }
 }
+
 
 
 
