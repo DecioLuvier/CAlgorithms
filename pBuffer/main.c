@@ -35,7 +35,6 @@ void pushInfo() {
 
     printf("Insert an age:\n");
     scanf(" %1[^\n]", WORD_INPUT); 
-    strcat(WORD_LIST, WORD_INPUT);
     buffer = realloc(buffer,WORD_LIST_BASE + (sizeof(char) * (strlen(WORD_LIST) + strlen(WORD_INPUT) + 1)));
     strcat(WORD_LIST, WORD_INPUT);
 
@@ -48,7 +47,6 @@ void skipPerson() {
     WORD_COUNTER_TBN = WORD_COUNTER_TBN + 1 + (unsigned char) WORD_LIST[WORD_COUNTER_TBN];
     WORD_COUNTER_TBN = WORD_COUNTER_TBN + 1;
 }
-
 
 void printPersonByTarget() {
     if (TARGET_GET == 0 || TARGET_GET > WORD_LIST_LENGTH)
@@ -96,6 +94,7 @@ void searchPersonByName() {
     }
 }
 
+
 // Remove uma pessoa pelo nome, compactando o vetor com memmove
 void removePersonByName() {
     searchPersonByName();
@@ -129,16 +128,30 @@ void removePersonByName() {
 }
 
 void printAllInfo() {
-    LOOP_COUNTER = 0;
+    WORD_COUNTER_TBN = 0;  
+    LOOP_COUNTER = 1;       
 
-    while (LOOP_COUNTER < WORD_LIST_LENGTH) {
-        TARGET_GET = LOOP_COUNTER + 1;
-        printf("Person %hu:\n", TARGET_GET);
-        printPersonByTarget();
-        printf("\n");
+    while (LOOP_COUNTER <= WORD_LIST_LENGTH) {
+
+        printf("Person %hu:\n", LOOP_COUNTER);
+        COUNTER_CHAR = (unsigned char) WORD_LIST[WORD_COUNTER_TBN];
+        WORD_COUNTER_TBN = WORD_COUNTER_TBN + 1;
+
+        printf("Name: %.*s\n", COUNTER_CHAR, WORD_LIST + WORD_COUNTER_TBN);
+        WORD_COUNTER_TBN = WORD_COUNTER_TBN + COUNTER_CHAR;
+        COUNTER_CHAR = (unsigned char) WORD_LIST[WORD_COUNTER_TBN];
+        WORD_COUNTER_TBN = WORD_COUNTER_TBN + 1;
+
+        printf("Email: %.*s\n", COUNTER_CHAR, WORD_LIST + WORD_COUNTER_TBN);
+        WORD_COUNTER_TBN = WORD_COUNTER_TBN + COUNTER_CHAR;
+
+        printf("Age: %c\n\n", WORD_LIST[WORD_COUNTER_TBN]);
+        WORD_COUNTER_TBN = WORD_COUNTER_TBN + 1;
         LOOP_COUNTER = LOOP_COUNTER + 1;
     }
 }
+
+
 
 int main() {
     buffer = malloc(WORD_LIST_BASE + 1);
